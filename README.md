@@ -1,6 +1,6 @@
 # Laminar Pipe Flow Validation — Hagen-Poiseuille (ANSYS Fluent)
 
-CFD simulation of developing laminar flow in a circular pipe (Re ≈ 500) with ANSYS Fluent, validated against analytical and empirical references: **centerline velocity within 0.27 %, pressure drop within 1 %, entrance length within 0.7 %**.
+CFD simulation of developing laminar flow in a circular pipe (Re ≈ 500) with ANSYS Fluent, validated against analytical and empirical references: **centerline velocity within 0.27 %, pressure drop within 1 %, entrance length within 0.2 % %**.
 
 ![Axial velocity contour — flow development from a uniform inlet profile](images/07a_contour_overview.png)
 
@@ -95,7 +95,7 @@ The solution converged in about 100 iterations, with all residuals below 10⁻�
 
 The wall boundary layer grows from the inlet corner while the core accelerates to conserve the flow rate, until viscous effects reach the axis.
 
-![Radial velocity profiles at several axial positions](images/09_profile_development.png)
+![Radial velocity profiles at several axial positions](images/09b_profile_development.png)
 
 Velocity profiles at x = 0.02, 0.1, 0.2, 0.4 and 0.8 m show the transition from a nearly flat profile to the Poiseuille parabola. Two physical features are worth noting:
 
@@ -112,17 +112,15 @@ The centerline velocity rises from the inlet value (0.0251 m/s) and asymptotical
 
 ## 7. Validation
 
-| Quantity | Reference | CFD | Error |
-|---|---|---|---|
 | u_max at x = 0.8 m | 0.0502 m/s (Poiseuille) | 0.05007 m/s | **0.27 %** |
-| Total pressure drop | 2.40 Pa (Poiseuille + Hagenbach) | ≈ 2.40 Pa | **< 1 %** |
-| Entrance length L_e (99 %) | 0.567 m (Durst et al., 2005) | 0.571 m | **0.7 %** |
+| Full profile (RMS deviation) | Poiseuille parabola | — | **0.14 %** of u_max |
+| Entrance length L_e (99 %) | 0.567 m (Durst et al., 2005) | 0.566 m | **0.2 %** |
 
 ![CFD velocity profile vs. analytical parabola](images/11_validation_profile.png)
 
 ![CFD centerline velocity vs. fully developed value](images/12_validation_axis.png)
 
-**Entrance length measurement.** The centerline velocity was extracted on vertical lines at x = 0.4, 0.5, 0.6 and 0.7 m, and the 99 % threshold was located by linear interpolation:
+**Entrance length measurement.** A first estimate used vertical lines at x = 0.4–0.7 m and linear interpolation (table below). The final value is computed by `scripts/validation.py` directly from the full centerline velocity export (~200 points), which locates the 99 % threshold more precisely: **L_e = 0.566 m**.
 
 | x (m) | u_axis (m/s) |
 |---|---|
